@@ -10,7 +10,7 @@ public class MainController {
         return "I'm publicly accessed by everyone.";
     }
 
-    @GetMapping("/auth")
+    @GetMapping("/user")
     public String availableToAuthenticated() {
         return "I'm only accessible by authenticated users.";
     }
