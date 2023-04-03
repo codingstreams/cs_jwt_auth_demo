@@ -18,16 +18,18 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+    @Autowired
+    private JwtAuthEntryPoint jwtAuthEntryPoint;
 
     // Create JwtAuthFilter bean
     @Bean
-    public JwtAuthFilter jwtAuthFilter() {
+    public JwtAuthFilter jwtAuthFilter(){
         return new JwtAuthFilter();
     }
 
     // Create PasswordEncoder bean
     @Bean
-    public PasswordEncoder passwordEncoder() {
+    public PasswordEncoder passwordEncoder(){
         return NoOpPasswordEncoder.getInstance();
     }
 
@@ -37,21 +39,22 @@ public class SecurityConfig {
         // Disable CORS
         http.cors().disable();
 
+        // Disable CSRF
+//        http.csrf().disable();
+
         // Change session management to STATELESS
         http.sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         // Add exception handler
-        AuthenticationEntryPoint jwtAuthEntryPoint = new JwtAuthEntryPoint();
         http.exceptionHandling()
                 .authenticationEntryPoint(jwtAuthEntryPoint);
 
         // Authorize http requests
-        http.authorizeHttpRequests(matcher -> {
-            matcher.requestMatchers("/").permitAll()
-                    .requestMatchers("/app-auth/token/**").permitAll()
-                    .anyRequest().authenticated();
-        });
+        http.authorizeHttpRequests()
+                .requestMatchers("/").permitAll()
+                .requestMatchers("/app-auth/token/**").permitAll()
+                .anyRequest().authenticated();
 
         // Add JWT authentication filter
         http.addFilterBefore(jwtAuthFilter(), UsernamePasswordAuthenticationFilter.class);

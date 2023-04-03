@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.util.StringUtils;
@@ -29,20 +30,22 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         String token = getTokenFromRequest(request);
 
         // Validate token using JWT provider
-        if (token != null && jwtProvider.validateToken(token)) {
+        if(token != null && jwtProvider.validateToken(token)) {
+
             // Get username from token
             String username = jwtProvider.getUsernameFromToken(token);
 
             // Get user details
-            var userDetails = userDetailsService.loadUserByUsername(username);
+            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
-            // Create authentication token
+            // Create authentication object
             var auth = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-
             auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
             // Set user to spring context
-            SecurityContextHolder.getContext().setAuthentication(auth);
+            SecurityContextHolder.getContext()
+                    .setAuthentication(auth);
+
         }
 
         filterChain.doFilter(request, response);
@@ -50,10 +53,12 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
     private String getTokenFromRequest(HttpServletRequest request) {
         // Extract authentication header
-        String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
+        var authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
+
+        // Bearer {JWT}
 
         // Check whether it starts with `Bearer ` or not
-        if (StringUtils.hasLength(authHeader) && authHeader.startsWith("Bearer ")) {
+        if(StringUtils.hasText(authHeader) && authHeader.startsWith("Bearer ")){
             return authHeader.substring(7);
         }
 

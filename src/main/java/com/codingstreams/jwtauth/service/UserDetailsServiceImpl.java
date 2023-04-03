@@ -17,6 +17,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         var authorities = new ArrayList<GrantedAuthority>();
         authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
 
-        return new User("codingstreams", "test1234", authorities);
+        return new User("test", "test1234", authorities);
     }
 }

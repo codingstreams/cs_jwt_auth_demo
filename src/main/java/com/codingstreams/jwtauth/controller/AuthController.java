@@ -20,13 +20,15 @@ public class AuthController {
     private JwtProvider jwtProvider;
 
     @GetMapping("/token")
-    public String getToken(@RequestBody AuthRequest authRequest){
+    public String getToken(@RequestBody AuthRequest authRequest) throws Exception {
         // Get user details
-        UserDetails user = userDetailsService.loadUserByUsername(authRequest.getUsername());
+        UserDetails userDetails = userDetailsService.loadUserByUsername(authRequest.getUsername());
 
-        // Generate token
-        String token = jwtProvider.generateToken(user.getUsername());
+        if(userDetails.getPassword().equals(authRequest.getPassword())){
+            // Generate token
+            return jwtProvider.generateToken(authRequest.getUsername());
+        }
 
-        return token;
+        throw new Exception("User details invalid.");
     }
 }
