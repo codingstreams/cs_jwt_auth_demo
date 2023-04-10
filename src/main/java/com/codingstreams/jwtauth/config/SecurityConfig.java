@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
@@ -30,7 +31,7 @@ public class SecurityConfig {
     // Create PasswordEncoder bean
     @Bean
     public PasswordEncoder passwordEncoder(){
-        return NoOpPasswordEncoder.getInstance();
+        return new BCryptPasswordEncoder();
     }
 
     // Create SecurityFilterChain bean
@@ -40,7 +41,7 @@ public class SecurityConfig {
         http.cors().disable();
 
         // Disable CSRF
-//        http.csrf().disable();
+        http.csrf().disable();
 
         // Change session management to STATELESS
         http.sessionManagement()
@@ -54,6 +55,7 @@ public class SecurityConfig {
         http.authorizeHttpRequests()
                 .requestMatchers("/").permitAll()
                 .requestMatchers("/app-auth/token/**").permitAll()
+                .requestMatchers("/app-auth/createUser/**").permitAll()
                 .anyRequest().authenticated();
 
         // Add JWT authentication filter
