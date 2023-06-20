@@ -1,8 +1,8 @@
-package com.codingstreams.jwtauth.service;
+package org.example.application.service;
 
-import com.codingstreams.jwtauth.dto.CreateUserReq;
-import com.codingstreams.jwtauth.model.AppUser;
-import com.codingstreams.jwtauth.repository.AppUserRepository;
+import org.example.application.dto.CreateUserReq;
+import org.example.application.model.AppUser;
+import org.example.application.repository.AppUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

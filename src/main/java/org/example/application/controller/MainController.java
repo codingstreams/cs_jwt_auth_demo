@@ -1,4 +1,4 @@
-package com.codingstreams.jwtauth.controller;
+package org.example.application.controller;
 
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.GetMapping;

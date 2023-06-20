@@ -1,4 +1,4 @@
-package com.codingstreams.jwtauth.security;
+package org.example.application.security;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

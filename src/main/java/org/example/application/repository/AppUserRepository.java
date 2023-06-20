@@ -1,6 +1,6 @@
-package com.codingstreams.jwtauth.repository;
+package org.example.application.repository;
 
-import com.codingstreams.jwtauth.model.AppUser;
+import org.example.application.model.AppUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

@@ -1,10 +1,10 @@
-package com.codingstreams.jwtauth.controller;
+package org.example.application.controller;
 
-import com.codingstreams.jwtauth.dto.AuthRequest;
-import com.codingstreams.jwtauth.dto.CreateUserReq;
-import com.codingstreams.jwtauth.model.AppUser;
-import com.codingstreams.jwtauth.security.JwtProvider;
-import com.codingstreams.jwtauth.service.UserDetailsServiceImpl;
+import org.example.application.dto.AuthRequest;
+import org.example.application.dto.CreateUserReq;
+import org.example.application.model.AppUser;
+import org.example.application.security.JwtProvider;
+import org.example.application.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;

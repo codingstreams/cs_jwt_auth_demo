@@ -1,4 +1,4 @@
-package com.codingstreams.jwtauth.security;
+package org.example.application.security;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;

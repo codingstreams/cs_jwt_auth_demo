@@ -1,8 +1,9 @@
-package com.codingstreams.jwtauth.dto;
+package org.example.application.dto;
 
-public class AuthRequest {
+public class CreateUserReq {
     private String username;
     private String password;
+    private String userRole;
 
     public String getUsername() {
         return username;
@@ -18,5 +19,13 @@ public class AuthRequest {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(String userRole) {
+        this.userRole = userRole;
     }
 }
